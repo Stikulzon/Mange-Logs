@@ -1,5 +1,5 @@
-[13:14:45] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.20.1 with Fabric Loader 0.15.0
-[13:14:45] [main/INFO] (FabricLoader) Loading 45 mods:
+[01:53:14] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.20.1 with Fabric Loader 0.15.0
+[01:53:14] [main/INFO] (FabricLoader) Loading 45 mods:
 	- fabric-api 0.91.0+1.20.1
 	- fabric-api-base 0.4.30+7abfd51577
 	- fabric-api-lookup-api-v1 1.6.35+4d8536c977
@@ -45,96 +45,39 @@
 	- mange-logs 1.0.0
 	- minecraft 1.20.1
 	- mixinextras 0.3.0
-[13:14:45] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.5 Source=file:/home/zefir/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.12.5+mixin.0.8.5/8d31fb97c3e0cd7c8dad3441851c523bcfae6d8e/sponge-mixin-0.12.5+mixin.0.8.5.jar Service=Knot/Fabric Env=SERVER
-[13:14:46] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
-[13:14:46] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_16
-[13:14:46] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_17
-[13:14:46] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.3.0).
-[13:14:52] [main/INFO] (mange-logs) Initialization of the MangeLogs
-[13:14:53] [main/INFO] (Minecraft) Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
-[13:14:55] [main/INFO] (Minecraft) Loaded 7 recipes
-[13:14:55] [main/INFO] (Minecraft) Loaded 1271 advancements
-[13:14:55] [main/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 64 new biomes in 2.137 ms
-[13:14:55] [Server thread/INFO] (Minecraft) Starting minecraft server version 1.20.1
-[13:14:55] [Server thread/INFO] (Minecraft) Loading properties
-[13:14:55] [Server thread/INFO] (Minecraft) Default game type: SURVIVAL
-[13:14:55] [Server thread/INFO] (Minecraft) Generating keypair
-[13:14:55] [Server thread/INFO] (Minecraft) Starting Minecraft server on *:25565
-[13:14:55] [Server thread/INFO] (Minecraft) Using epoll channel type
-[13:14:55] [Server thread/WARN] (Minecraft) **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
-[13:14:55] [Server thread/WARN] (Minecraft) The server will make no attempt to authenticate usernames. Beware.
-[13:14:55] [Server thread/WARN] (Minecraft) While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
-[13:14:55] [Server thread/WARN] (Minecraft) To change this, set "online-mode" to "true" in the server.properties file.
-[13:14:55] [Server thread/INFO] (Minecraft) Preparing level "world"
-[13:15:00] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
-[13:15:01] [Worker-Main-1/INFO] (Minecraft) Preparing spawn area: 0%
-[13:15:01] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 0%
-[13:15:01] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 0%
-[13:15:02] [Worker-Main-3/INFO] (Minecraft) Preparing spawn area: 0%
-[13:15:02] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 0%
-[13:15:03] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 1%
-[13:15:03] [Worker-Main-3/INFO] (Minecraft) Preparing spawn area: 2%
-[13:15:04] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 3%
-[13:15:04] [Worker-Main-3/INFO] (Minecraft) Preparing spawn area: 4%
-[13:15:05] [Worker-Main-3/INFO] (Minecraft) Preparing spawn area: 5%
-[13:15:05] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 6%
-[13:15:06] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 9%
-[13:15:06] [Worker-Main-3/INFO] (Minecraft) Preparing spawn area: 10%
-[13:15:07] [Worker-Main-1/INFO] (Minecraft) Preparing spawn area: 12%
-[13:15:07] [Worker-Main-3/INFO] (Minecraft) Preparing spawn area: 14%
-[13:15:08] [Worker-Main-1/INFO] (Minecraft) Preparing spawn area: 17%
-[13:15:08] [Worker-Main-3/INFO] (Minecraft) Preparing spawn area: 20%
-[13:15:09] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 22%
-[13:15:09] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 25%
-[13:15:11] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 28%
-[13:15:11] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 28%
-[13:15:11] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 28%
-[13:15:11] [Worker-Main-1/INFO] (Minecraft) Preparing spawn area: 30%
-[13:15:12] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 33%
-[13:15:12] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 36%
-[13:15:13] [Worker-Main-1/INFO] (Minecraft) Preparing spawn area: 39%
-[13:15:13] [Worker-Main-1/INFO] (Minecraft) Preparing spawn area: 42%
-[13:15:14] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 45%
-[13:15:14] [Worker-Main-1/INFO] (Minecraft) Preparing spawn area: 47%
-[13:15:15] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 51%
-[13:15:15] [Worker-Main-1/INFO] (Minecraft) Preparing spawn area: 54%
-[13:15:16] [Worker-Main-3/INFO] (Minecraft) Preparing spawn area: 56%
-[13:15:16] [Worker-Main-1/INFO] (Minecraft) Preparing spawn area: 58%
-[13:15:17] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 62%
-[13:15:19] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 63%
-[13:15:19] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 63%
-[13:15:19] [Worker-Main-3/INFO] (Minecraft) Preparing spawn area: 63%
-[13:15:19] [Worker-Main-3/INFO] (Minecraft) Preparing spawn area: 63%
-[13:15:19] [Worker-Main-3/INFO] (Minecraft) Preparing spawn area: 63%
-[13:15:20] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 65%
-[13:15:20] [Worker-Main-1/INFO] (Minecraft) Preparing spawn area: 68%
-[13:15:21] [Worker-Main-3/INFO] (Minecraft) Preparing spawn area: 70%
-[13:15:21] [Worker-Main-3/INFO] (Minecraft) Preparing spawn area: 73%
-[13:15:22] [Worker-Main-3/INFO] (Minecraft) Preparing spawn area: 75%
-[13:15:22] [Worker-Main-3/INFO] (Minecraft) Preparing spawn area: 78%
-[13:15:23] [Worker-Main-3/INFO] (Minecraft) Preparing spawn area: 81%
-[13:15:23] [Worker-Main-3/INFO] (Minecraft) Preparing spawn area: 83%
-[13:15:24] [Worker-Main-1/INFO] (Minecraft) Preparing spawn area: 86%
-[13:15:24] [Worker-Main-3/INFO] (Minecraft) Preparing spawn area: 89%
-[13:15:25] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 92%
-[13:15:25] [Worker-Main-3/INFO] (Minecraft) Preparing spawn area: 96%
-[13:15:26] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 99%
-[13:15:26] [Server thread/INFO] (Minecraft) Time elapsed: 25548 ms
-[13:15:26] [Server thread/INFO] (Minecraft) Done (30.099s)! For help, type "help"
-[13:15:30] [Server thread/INFO] (Minecraft) Stikulzon[/127.0.0.1:47126] logged in with entity id 312 at (-4.5, 64.0, 2.5)
-[13:15:30] [Server thread/INFO] (Minecraft) Stikulzon joined the game
-[13:16:03] [Server thread/INFO] (Minecraft) Unknown or incomplete command, see below for error
-[13:16:03] [Server thread/INFO] (Minecraft) <--[HERE]
-[13:16:31] [Server thread/INFO] (mange-logs) The player Stikulzon hits block.minecraft.grass_block BlockPos{x=-17, y=64, z=8}
-[13:23:28] [Server thread/INFO] (Minecraft) Made Stickulzon a server operator
-[13:23:40] [Server thread/INFO] (Minecraft) Made Stikulzon a server operator
-[13:23:46] [Server thread/INFO] (Minecraft) [Stikulzon: Set own game mode to Creative Mode]
-[13:24:02] [Server thread/INFO] (mange-logs) The player Stikulzon use block.minecraft.grass
-[13:24:02] [Server thread/INFO] (mange-logs) The player Stikulzon use block.minecraft.anvil
-[13:24:06] [Server thread/INFO] (mange-logs) The player Stikulzon use block.minecraft.grass_block
-[13:24:10] [Server thread/INFO] (mange-logs) The player Stikulzon use Armor Stand
-[13:24:17] [Server thread/INFO] (mange-logs) The player Stikulzon hit entity Armor Stand
-[13:24:28] [Server thread/INFO] (mange-logs) The player Stikulzon use block.minecraft.grass_block
-[13:24:32] [Server thread/INFO] (mange-logs) The player Stikulzon use Armor Stand
-[13:24:34] [Server thread/INFO] (mange-logs) The player Stikulzon hit entity daasdasd with name daasdasd
-[13:24:34] [Server thread/INFO] (mange-logs) The player Stikulzon hits block.minecraft.grass_block BlockPos{x=-20, y=64, z=13}
+[01:53:14] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.5 Source=file:/C:/Users/Zefir/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.12.5+mixin.0.8.5/8d31fb97c3e0cd7c8dad3441851c523bcfae6d8e/sponge-mixin-0.12.5+mixin.0.8.5.jar Service=Knot/Fabric Env=SERVER
+[01:53:14] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
+[01:53:14] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_16
+[01:53:14] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_17
+[01:53:15] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.3.0).
+[01:53:16] [main/WARN] (PerfDataUtil) Failed to add PDH Counter: \Paging File(_Total)\% Usage, Error code: 0xC0000BB8
+[01:53:16] [main/WARN] (PerfCounterQueryHandler) Failed to add counter for PDH counter: \Paging File(_Total)\% Usage
+[01:53:16] [main/WARN] (PerfCounterQuery) Disabling further attempts to query Paging File.
+[01:53:16] [main/WARN] (WmiQueryHandler) COM exception: Invalid Class Win32_PerfRawData_PerfOS_PagingFile
+[01:53:22] [main/INFO] (mange-logs) Initialization of the MangeLogs
+[01:53:22] [main/INFO] (Minecraft) [STDOUT]: The file has been written
+[01:53:23] [main/INFO] (Minecraft) Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
+[01:53:24] [main/INFO] (Minecraft) Loaded 7 recipes
+[01:53:24] [main/INFO] (Minecraft) Loaded 1271 advancements
+[01:53:25] [main/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 64 new biomes in 1.449 ms
+[01:53:25] [Server thread/INFO] (Minecraft) Starting minecraft server version 1.20.1
+[01:53:25] [Server thread/INFO] (Minecraft) Loading properties
+[01:53:25] [Server thread/INFO] (Minecraft) Default game type: SURVIVAL
+[01:53:25] [Server thread/INFO] (Minecraft) Generating keypair
+[01:53:25] [Server thread/INFO] (Minecraft) Starting Minecraft server on *:25565
+[01:53:25] [Server thread/INFO] (Minecraft) Using default channel type
+[01:53:25] [Server thread/WARN] (Minecraft) **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+[01:53:25] [Server thread/WARN] (Minecraft) The server will make no attempt to authenticate usernames. Beware.
+[01:53:25] [Server thread/WARN] (Minecraft) While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+[01:53:25] [Server thread/WARN] (Minecraft) To change this, set "online-mode" to "true" in the server.properties file.
+[01:53:25] [Server thread/INFO] (Minecraft) Preparing level "world"
+[01:53:26] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
+[01:53:28] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 0%
+[01:53:28] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 0%
+[01:53:28] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 0%
+[01:53:28] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 0%
+[01:53:28] [Worker-Main-6/INFO] (Minecraft) Preparing spawn area: 6%
+[01:53:29] [Worker-Main-6/INFO] (Minecraft) Preparing spawn area: 72%
+[01:53:29] [Worker-Main-7/INFO] (Minecraft) Preparing spawn area: 99%
+[01:53:29] [Server thread/INFO] (Minecraft) Time elapsed: 3070 ms
+[01:53:29] [Server thread/INFO] (Minecraft) Done (3.998s)! For help, type "help"

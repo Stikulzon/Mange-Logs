@@ -3,7 +3,6 @@ package zefir.mangelogs;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.minecraft.text.Text;
 
 import org.slf4j.Logger;
@@ -13,16 +12,13 @@ import static net.minecraft.server.command.CommandManager.*;
 
 public class MangeLogs implements ModInitializer {
     public static final Logger LOGGER = LoggerFactory.getLogger("mange-logs");
-
-//	public static Logger LOGGER = LogManager.getLogger("Iseeitall");
-
 	@Override
 	public void onInitialize() {
-
-
-
 		LOGGER.info("Initialization of the MangeLogs");
-//		TxTConfigLoader.createConfigFile("logIfOP=false\nlogWhenBreakBlock=false\nlogWhenHitEntity=true\nlogWhenUseItem=true\nlogWhenUseBlock=true\nlogWhenUseEntity=true\nlogIfStartSleeping=false\nlogIfStopSleeping=false");
+		SessionManager sessionMgr = new SessionManager();
+		sessionMgr.CreateSessionId();
+		LogWriter.WriteToLog("SessionID", sessionMgr.GetSessionId());
+
 		Events.RegisterEvent();
 
 		//register the reload command
@@ -34,7 +30,5 @@ public class MangeLogs implements ModInitializer {
 					Events.RegisterEvent();
 					context.getSource().sendFeedback(() -> Text.literal("The config was reload"), false);
 					return 1;})));
-
-
 	}
 }

@@ -1,75 +1,82 @@
 package zefir.mangelogs;
 
-import zefir.mangelogs.utils.getName;
-
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents.Load;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LightningEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.TypedActionResult;
 
 public class Events {
     public static void RegisterEvent() {
+
         // Called when left-clicking (“attacking”) a block.
         AttackBlockCallback.EVENT.register((player, world, hand, blockPos, direction) -> {
-            MangeLogs.LOGGER.info("The player [" + player.getName().getString() + "] hits [" + world.getBlockState(blockPos).getBlock() + "] at pos" + getName.BlockPos(blockPos));
+            String info = "The player [" + player.getName().getString() + "] at pos " + Utils.getPlayerPos(player) + " hits [" + world.getBlockState(blockPos).getBlock() + "] at " + Utils.BlockPos(blockPos);
+            MangeLogs.LOGGER.info(info);
             return ActionResult.PASS;
         });
 
         // Called when left-clicking (“attacking”) an entity.
         AttackEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
-        if (entity instanceof PlayerEntity) {
-            MangeLogs.LOGGER.info("The player [" + player.getName().getString() + " ]hit player " + entity.getName().getString());
-        } else if (entity.hasCustomName()){
-            MangeLogs.LOGGER.info("The player [" + player.getName().getString() + "] hit entity " + getName.EntityType(entity) + " with name " + entity.getName().getString());
-        } else {
-            MangeLogs.LOGGER.info("The player [" + player.getName().getString() + "] hit entity " + entity.getName().getString());
-        }
+            String info;
+            if (entity instanceof PlayerEntity) {
+                info = "The player [" + player.getName().getString() + "] at pos " + Utils.getPlayerPos(player) + " hits player " + entity.getName().getString() + " at pos " + Utils.getEntityPos(entity);
+            } else if (entity.hasCustomName()) {
+                info = "The player [" + player.getName().getString() + "] at pos " + Utils.getPlayerPos(player) + " hits entity " + Utils.EntityType(entity) + " with name " + entity.getName().getString() + " at pos " + Utils.getEntityPos(entity);
+            } else {
+                info = "The player [" + player.getName().getString() + "] at pos " + Utils.getPlayerPos(player) + " hits entity " + entity.getName().getString() + " at pos " + Utils.getEntityPos(entity);
+            }
+            MangeLogs.LOGGER.info(info);
             return ActionResult.PASS;
         });
 
         // Called when right-clicking (“using”) an item
         UseItemCallback.EVENT.register((player, world, hand) -> {
-            ItemStack heldItemStack = player.getStackInHand(hand);
-            Item heldItem = heldItemStack.getItem();
-
-            MangeLogs.LOGGER.info("The player " + player.getName().getString() + " used " + getName.Item(heldItem));
+            String info = "The player " + player.getName().getString() + " at pos " + Utils.getPlayerPos(player) + " used " + Utils.getItemNameInHand(player, hand);
+            MangeLogs.LOGGER.info(info);
             return TypedActionResult.pass(ItemStack.EMPTY);
         });
 
         // Called when right-clicking (“using”) a block
         UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
-            MangeLogs.LOGGER.info("The player " + player.getName().getString() + " use " + getName.Block(world, hitResult.getBlockPos()));
+            String info = "The player " + player.getName().getString() + " at pos " + Utils.getPlayerPos(player) + " use " + Utils.Block(world, hitResult.getBlockPos()) + " with " + Utils.getItemNameInHand(player, hand);
+            MangeLogs.LOGGER.info(info);
             return ActionResult.PASS;
         });
+
         // Called when right-clicking (“using”) an entity.
         UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
-            if(hitResult != null) {
+            if (hitResult != null) {
+                String info;
                 if (entity instanceof PlayerEntity) {
-                    MangeLogs.LOGGER.info("The player [" + player.getName().getString() + "] right-clicking player " + entity.getName().getString());
-                } else if (entity.hasCustomName()){
-                    MangeLogs.LOGGER.info("The player [" + player.getName().getString() + "] right-clicking entity " + getName.EntityType(entity) + " with name " + entity.getName().getString());
+                    info = "The player [" + player.getName().getString() + "] at pos " + Utils.getPlayerPos(player) + " right-clicking player " + entity.getName().getString() + " at pos " + Utils.getEntityPos(entity);
+                } else if (entity.hasCustomName()) {
+                    info = "The player [" + player.getName().getString() + "] at pos " + Utils.getPlayerPos(player) + " right-clicking entity " + Utils.EntityType(entity) + " with name " + entity.getName().getString() + " at pos " + Utils.getEntityPos(entity);
                 } else {
-                    MangeLogs.LOGGER.info("The player [" + player.getName().getString() + "] right-clicking entity " + entity.getName().getString());
+                    info = "The player [" + player.getName().getString() + "] at pos " + Utils.getPlayerPos(player) + " right-clicking entity " + entity.getName().getString() + " at pos " + Utils.getEntityPos(entity);
                 }
+                MangeLogs.LOGGER.info(info);
             }
             return ActionResult.PASS;
         });
 
-
-
-
-
         // Called when lighting spawns
-        UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
-            MangeLogs.LOGGER.info("The player " + player.getName().getString() + " use " + getName.Block(world, hitResult.getBlockPos()));
-            return ActionResult.PASS;
+        ServerEntityEvents.ENTITY_LOAD.register((Entity entity, ServerWorld world) -> {
+            if (entity instanceof LightningEntity) {
+                String info = "The lighting hit at coordinates " + Utils.getEntityPos(entity);
+                MangeLogs.LOGGER.info(info);
+                LogWriter.WriteToLog("Lighting", info);
+            }
         });
+
+//        ServerLivingEntityEvents.ALLOW_DEATH
     }
 }
