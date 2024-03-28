@@ -1,1 +1,0 @@
-The lighting hit at coordinates {x=368.7512929328762, y=82.0, z=371.23750001192093}

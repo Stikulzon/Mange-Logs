@@ -2,17 +2,19 @@
 	"schemaVersion": 1,
 	"id": "mange-logs",
 	"version": "${version}",
+
 	"name": "Mange Logs",
 	"description": "This is an example description! Tell everyone what your mod is about!",
 	"authors": [
-		"Me!"
+		"Zefir"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/Stikulzon/Mange-Logs"
 	},
+
 	"license": "CC0-1.0",
 	"icon": "assets/mange-logs/icon.png",
+
 	"environment": "*",
 	"entrypoints": {
 		"main": [
@@ -22,6 +24,7 @@
 	"mixins": [
 		"mange-logs.mixins.json"
 	],
+
 	"depends": {
 		"fabricloader": ">=0.15.0",
 		"minecraft": "~1.20.1",
