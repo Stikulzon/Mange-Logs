@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import zefir.mangelogs.LogWriter;
+import zefir.mangelogs.config.ConfigManager;
 import zefir.mangelogs.utils.Utils;
 
 @Mixin(ScreenHandler.class)
@@ -18,24 +19,26 @@ public class ScreenHandlerMixin {
 
     @Inject(method = "onSlotClick", at = @At("HEAD"))
     private void onUIClick(int slotIndex, int button, SlotActionType actionType, PlayerEntity player, CallbackInfo ci) {
-        if (player != null && slotIndex >= 0) {
-            Slot slot = ((ScreenHandler) (Object) this).getSlot(slotIndex);
-            ItemStack clickedStack = slot.getStack();
+        if (ConfigManager.isLogEventEnabled("UIClick")) {
+            if (player != null && slotIndex >= 0) {
+                Slot slot = ((ScreenHandler) (Object) this).getSlot(slotIndex);
+                ItemStack clickedStack = slot.getStack();
 
-            NbtCompound nbt = clickedStack.getNbt();
-            String nbtString = nbt != null ? nbt.toString() : "No NBT";
+                NbtCompound nbt = clickedStack.getNbt();
+                String nbtString = nbt != null ? nbt.toString() : "No NBT";
 
-            String eventInfo = String.format(
-                    "Player: %s | Location: %s | Slot: %d | Button: %d | Action: %s | Item: %s | NBT: %s",
-                    player.getName().getString(),
-                    Utils.formatPlayerLocation(player),
-                    slotIndex,
-                    button,
-                    actionType,
-                    clickedStack.getItem().getName().getString(),
-                    nbtString
-            );
-            LogWriter.logToFile("UIClick", eventInfo);
+                String eventInfo = String.format(
+                        "Player: %s | Location: %s | Slot: %d | Button: %d | Action: %s | Item: %s | NBT: %s",
+                        player.getName().getString(),
+                        Utils.formatPlayerLocation(player),
+                        slotIndex,
+                        button,
+                        actionType,
+                        clickedStack.getItem().getName().getString(),
+                        nbtString
+                );
+                LogWriter.logToFile("UIClick", eventInfo);
+            }
         }
     }
 }

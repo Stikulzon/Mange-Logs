@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import zefir.mangelogs.LogWriter;
+import zefir.mangelogs.config.ConfigManager;
 import zefir.mangelogs.utils.Utils;
 
 @Mixin(SentMessage.Chat.class)
@@ -21,12 +22,14 @@ public class ChatMessageSignerMixin {
 
     @Inject(method = "send", at = @At("HEAD"))
     private void onChatMessage(ServerPlayerEntity sender, boolean filterMaskEnabled, MessageType.Parameters params, CallbackInfo ci) {
-        String eventInfo = String.format(
-                "Player: %s | Location: %s | Message: %s",
-                sender.getName().getString(),
-                Utils.formatPlayerLocation(sender),
-                message.getContent().getString()
-        );
-        LogWriter.logToFile("ChatMessage", eventInfo);
+        if (ConfigManager.isLogEventEnabled("ChatMessage")) {
+            String eventInfo = String.format(
+                    "Player: %s | Location: %s | Message: %s",
+                    sender.getName().getString(),
+                    Utils.formatPlayerLocation(sender),
+                    message.getContent().getString()
+            );
+            LogWriter.logToFile("ChatMessage", eventInfo);
+        }
     }
 }

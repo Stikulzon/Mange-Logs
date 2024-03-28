@@ -4,7 +4,7 @@
 	"version": "${version}",
 
 	"name": "Mange Logs",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "Logging a wide range of user actions",
 	"authors": [
 		"Zefir"
 	],

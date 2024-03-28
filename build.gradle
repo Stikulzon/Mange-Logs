@@ -11,7 +11,9 @@ base {
 }
 
 repositories {
-
+	maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+	maven { url 'https://maven.nucleoid.xyz' }
+	maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -19,6 +21,9 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+	include(modImplementation('me.lucko:fabric-permissions-api:0.2-SNAPSHOT'))
+	include(implementation 'com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.4')
 }
 
 processResources {
