@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.5-SNAPSHOT'
+	id 'fabric-loom' version '1.7-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -14,6 +14,7 @@ repositories {
 	maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
 	maven { url 'https://maven.nucleoid.xyz' }
 	maven { url 'https://jitpack.io' }
+	maven { url "https://api.modrinth.com/maven/" }
 }
 
 dependencies {
@@ -24,6 +25,7 @@ dependencies {
 
 	include(modImplementation('me.lucko:fabric-permissions-api:0.2-SNAPSHOT'))
 	include(implementation 'com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.4')
+	modImplementation"maven.modrinth:nbttooltip:w0reHqvu"
 }
 
 processResources {
@@ -35,7 +37,7 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-	it.options.release = 17
+	it.options.release = 21
 }
 
 java {

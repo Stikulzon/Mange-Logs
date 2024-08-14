@@ -7,26 +7,19 @@ import org.simpleyaml.configuration.file.YamlFile;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import net.fabricmc.loader.api.FabricLoader;
 
 public class ConfigManager {
-
     public static final Path MANGELOGS_DIR = FabricLoader.getInstance().getConfigDir().resolve("MangeLogs");
     private static String configReloadPermission;
     private static YamlFile yamlFile;
-
     public static void registerConfigs() {
         createAndLoadConfig();
     }
 
     private static void createAndLoadConfig() {
-        if (!MANGELOGS_DIR.toFile().exists()) {
-            MANGELOGS_DIR.toFile().mkdir();
-        }
-
         Path configFile = MANGELOGS_DIR.resolve("config.yml");
         yamlFile = new YamlFile(configFile.toAbsolutePath().toString());
 
@@ -45,10 +38,10 @@ public class ConfigManager {
     private static void initializeConfigDefaults(YamlFile yamlFile) {
         yamlFile.setCommentFormat(YamlCommentFormat.PRETTY);
         yamlFile.options().headerFormatter()
-                .prefixFirst("######################")
+                .prefixFirst("###########################")
                 .commentPrefix("## ")
                 .commentSuffix(" ##")
-                .suffixLast("######################");
+                .suffixLast("###########################");
 
         yamlFile.setHeader("MangeLogs Config File");
 

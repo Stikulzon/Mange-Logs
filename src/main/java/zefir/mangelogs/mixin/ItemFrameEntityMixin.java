@@ -5,6 +5,7 @@ import net.minecraft.entity.decoration.ItemFrameEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
@@ -15,6 +16,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import zefir.mangelogs.LogWriter;
+import zefir.mangelogs.MangeLogs;
 import zefir.mangelogs.config.ConfigManager;
 import zefir.mangelogs.utils.Utils;
 
@@ -33,7 +35,7 @@ public class ItemFrameEntityMixin {
 
             if (!heldItem.isEmpty()) {
                 ItemStack itemInFrame = itemFrame.getHeldItemStack();
-                NbtCompound nbt = itemInFrame.getNbt();
+                NbtCompound nbt = MangeLogs.toolTip.mangelogs$encodeStack(itemInFrame, itemFrame.getRegistryManager().getOps(NbtOps.INSTANCE));
                 String nbtString = nbt != null ? nbt.toString() : "No NBT";
 
                 String eventInfo = String.format(
@@ -53,7 +55,7 @@ public class ItemFrameEntityMixin {
             ItemFrameEntity itemFrame = (ItemFrameEntity) (Object) this;
 
             ItemStack itemInFrame = itemFrame.getHeldItemStack();
-            NbtCompound nbt = itemInFrame.getNbt();
+            NbtCompound nbt = MangeLogs.toolTip.mangelogs$encodeStack(itemInFrame, itemFrame.getRegistryManager().getOps(NbtOps.INSTANCE));
             String nbtString = nbt != null ? nbt.toString() : "No NBT";
 
             String eventInfo = String.format(

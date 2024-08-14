@@ -4,6 +4,7 @@ import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,6 +14,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import zefir.mangelogs.LogWriter;
+import zefir.mangelogs.MangeLogs;
 import zefir.mangelogs.config.ConfigManager;
 
 @Mixin(ItemEntity.class)
@@ -26,14 +28,14 @@ public class ItemEntityMixin {
             World world = itemEntity.getWorld();
             ItemStack itemStack = itemEntity.getStack();
             if (itemEntity.age >= DESPAWN_AGE) { // Check if item is about to despawn
-                NbtCompound nbt = itemStack.getNbt();
+                NbtCompound nbt = MangeLogs.toolTip.mangelogs$encodeStack(itemStack, itemEntity.getRegistryManager().getOps(NbtOps.INSTANCE));
                 String nbtString = nbt != null ? nbt.toString() : "No NBT";
 
                 String eventInfo = String.format(
                         "Item: %s | Location: World: %s Dimension: %s X: %d Y: %d Z: %d | NBT: %s",
                         itemStack.getItem().getName().getString(),
                         world.getRegistryKey().getValue(),
-                        world.getDimensionKey(),
+                        world.getDimension(),
                         itemEntity.getBlockPos().getX(),
                         itemEntity.getBlockPos().getY(),
                         itemEntity.getBlockPos().getZ(),
@@ -51,14 +53,14 @@ public class ItemEntityMixin {
         ItemStack itemStack = itemEntity.getStack();
 
         if (health - amount <= 0) { // Check if health will be zero or less
-            NbtCompound nbt = itemStack.getNbt();
+            NbtCompound nbt = MangeLogs.toolTip.mangelogs$encodeStack(itemStack, itemEntity.getRegistryManager().getOps(NbtOps.INSTANCE));
             String nbtString = nbt != null ? nbt.toString() : "No NBT";
 
             String eventInfo = String.format(
                     "Item: %s | Location: World: %s Dimension: %s X: %d Y: %d Z: %d | NBT: %s | Damage Source: %s",
                     itemStack.getItem().getName().getString(),
                     world.getRegistryKey().getValue(),
-                    world.getDimensionKey(),
+                    world.getDimension(),
                     itemEntity.getBlockPos().getX(),
                     itemEntity.getBlockPos().getY(),
                     itemEntity.getBlockPos().getZ(),

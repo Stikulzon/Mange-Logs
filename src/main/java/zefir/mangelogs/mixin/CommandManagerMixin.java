@@ -9,6 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import zefir.mangelogs.LogWriter;
 import zefir.mangelogs.config.ConfigManager;
@@ -17,7 +18,7 @@ import zefir.mangelogs.config.ConfigManager;
 public class CommandManagerMixin {
 
     @Inject(method = "execute", at = @At("HEAD"))
-    private void onCommandExecute(ParseResults<ServerCommandSource> parseResults, String command, CallbackInfoReturnable<Integer> cir) {
+    private void onCommandExecute(ParseResults<ServerCommandSource> parseResults, String command, CallbackInfo ci) {
         if (ConfigManager.isLogEventEnabled("CommandExecution")) {
             if (parseResults.getContext().getSource().getEntity() instanceof ServerPlayerEntity player) {
                 BlockPos pos = player.getBlockPos();
@@ -26,7 +27,7 @@ public class CommandManagerMixin {
                         player.getName().getString(),
                         command,
                         parseResults.getContext().getSource().getWorld().getRegistryKey().getValue(),
-                        parseResults.getContext().getSource().getWorld().getDimensionKey(),
+                        parseResults.getContext().getSource().getWorld().getDimension(),
                         pos.getX(),
                         pos.getY(),
                         pos.getZ()
