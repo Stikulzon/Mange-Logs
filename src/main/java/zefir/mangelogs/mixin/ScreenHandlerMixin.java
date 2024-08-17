@@ -26,18 +26,19 @@ public class ScreenHandlerMixin {
                 Slot slot = ((ScreenHandler) (Object) this).getSlot(slotIndex);
                 ItemStack clickedStack = slot.getStack();
 
-                NbtCompound nbt = MangeLogs.toolTip.mangelogs$encodeStack(clickedStack, player.getRegistryManager().getOps(NbtOps.INSTANCE));
-                String nbtString = nbt != null ? nbt.toString() : "No NBT";
+//                NbtCompound nbt = MangeLogs.toolTip.mangelogs$encodeStack(clickedStack, player.getRegistryManager().getOps(NbtOps.INSTANCE));
+//                String nbtString = nbt != null ? nbt.toString() : "No NBT";
 
                 String eventInfo = String.format(
-                        "Player: %s | Location: %s | Slot: %d | Button: %d | Action: %s | Item: %s | NBT: %s",
+                        "Player: %s | Location: %s | Slot: %d | Button: %d | Action: %s | Item: %s",
                         player.getName().getString(),
                         Utils.formatPlayerLocation(player),
                         slotIndex,
                         button,
                         actionType,
-                        clickedStack.getItem().getName().getString(),
-                        nbtString
+                        clickedStack.getItem().getName().getString()
+//                        ,
+//                        nbtString
                 );
                 LogWriter.logToFile("UIClick", eventInfo);
             }

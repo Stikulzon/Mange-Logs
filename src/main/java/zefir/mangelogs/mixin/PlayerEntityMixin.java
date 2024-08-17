@@ -22,15 +22,16 @@ public class PlayerEntityMixin {
             if (cir.getReturnValue() != null) {
                 PlayerEntity player = (PlayerEntity) (Object) this;
 
-                NbtCompound nbt = MangeLogs.toolTip.mangelogs$encodeStack(stack, player.getRegistryManager().getOps(NbtOps.INSTANCE));
-                String nbtString = nbt != null ? nbt.toString() : "No NBT";
+//                NbtCompound nbt = MangeLogs.toolTip.mangelogs$encodeStack(stack, player.getRegistryManager().getOps(NbtOps.INSTANCE));
+//                String nbtString = nbt != null ? nbt.toString() : "No NBT";
 
                 String eventInfo = String.format(
-                        "Player: %s | Location: %s | Item: %s | NBT: %s",
+                        "Player: %s | Location: %s | Item: %s",
                         player.getName().getString(),
                         Utils.formatPlayerLocation(player),
-                        stack.getItem().getName().getString(),
-                        nbtString
+                        stack.getItem().getName().getString()
+//                        ,
+//                        nbtString
                 );
                 LogWriter.logToFile("ItemDropped", eventInfo);
             }

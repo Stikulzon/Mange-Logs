@@ -22,15 +22,17 @@ public class MobEntityMixin {
         if (ConfigManager.isLogEventEnabled("MobPickupItem")) {
             MobEntity mobEntity = (MobEntity) (Object) this;
             ItemStack itemStack = item.getStack();
-            NbtCompound nbt = MangeLogs.toolTip.mangelogs$encodeStack(itemStack, mobEntity.getRegistryManager().getOps(NbtOps.INSTANCE));
-            String nbtString = nbt != null ? nbt.toString() : "No NBT";
+//            NbtCompound nbt = MangeLogs.toolTip.mangelogs$encodeStack(itemStack, mobEntity.getRegistryManager().getOps(NbtOps.INSTANCE));
+//            String nbtString = nbt != null ? nbt.toString() : "No NBT";
 
             String eventInfo = String.format(
-                    "Mob: %s | Location: %s | Item: %s | NBT: %s",
+                    "Mob: %s | MobUuid: %s | Location: %s | Item: %s",
                     mobEntity.getName().getString(),
+                    mobEntity.getUuid().toString(),
                     Utils.formatEntityLocation(mobEntity),
-                    itemStack.getItem().getName().getString(),
-                    nbtString
+                    itemStack.getItem().getName().getString()
+//                    ,
+//                    nbtString
             );
             LogWriter.logToFile("MobPickupItem", eventInfo);
         }

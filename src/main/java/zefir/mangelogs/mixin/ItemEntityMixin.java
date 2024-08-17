@@ -28,18 +28,19 @@ public class ItemEntityMixin {
             World world = itemEntity.getWorld();
             ItemStack itemStack = itemEntity.getStack();
             if (itemEntity.age >= DESPAWN_AGE) { // Check if item is about to despawn
-                NbtCompound nbt = MangeLogs.toolTip.mangelogs$encodeStack(itemStack, itemEntity.getRegistryManager().getOps(NbtOps.INSTANCE));
-                String nbtString = nbt != null ? nbt.toString() : "No NBT";
+//                NbtCompound nbt = MangeLogs.toolTip.mangelogs$encodeStack(itemStack, itemEntity.getRegistryManager().getOps(NbtOps.INSTANCE));
+//                String nbtString = nbt != null ? nbt.toString() : "No NBT";
 
                 String eventInfo = String.format(
-                        "Item: %s | Location: World: %s Dimension: %s X: %d Y: %d Z: %d | NBT: %s",
+                        "Item: %s | Location: World: %s Dimension: %s X: %d Y: %d Z: %d",
                         itemStack.getItem().getName().getString(),
                         world.getRegistryKey().getValue(),
                         world.getDimension(),
                         itemEntity.getBlockPos().getX(),
                         itemEntity.getBlockPos().getY(),
-                        itemEntity.getBlockPos().getZ(),
-                        nbtString
+                        itemEntity.getBlockPos().getZ()
+//                        ,
+//                        nbtString
                 );
                 LogWriter.logToFile("ItemDespawn", eventInfo);
             }
@@ -53,18 +54,18 @@ public class ItemEntityMixin {
         ItemStack itemStack = itemEntity.getStack();
 
         if (health - amount <= 0) { // Check if health will be zero or less
-            NbtCompound nbt = MangeLogs.toolTip.mangelogs$encodeStack(itemStack, itemEntity.getRegistryManager().getOps(NbtOps.INSTANCE));
-            String nbtString = nbt != null ? nbt.toString() : "No NBT";
+//            NbtCompound nbt = MangeLogs.toolTip.mangelogs$encodeStack(itemStack, itemEntity.getRegistryManager().getOps(NbtOps.INSTANCE));
+//            String nbtString = nbt != null ? nbt.toString() : "No NBT";
 
             String eventInfo = String.format(
-                    "Item: %s | Location: World: %s Dimension: %s X: %d Y: %d Z: %d | NBT: %s | Damage Source: %s",
+                    "Item: %s | Location: World: %s Dimension: %s X: %d Y: %d Z: %d | Damage Source: %s",
                     itemStack.getItem().getName().getString(),
                     world.getRegistryKey().getValue(),
                     world.getDimension(),
                     itemEntity.getBlockPos().getX(),
                     itemEntity.getBlockPos().getY(),
                     itemEntity.getBlockPos().getZ(),
-                    nbtString,
+//                    nbtString,
                     source.getName()
             );
             LogWriter.logToFile("ItemDestroyed", eventInfo);

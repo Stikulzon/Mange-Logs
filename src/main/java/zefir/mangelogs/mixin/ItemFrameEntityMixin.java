@@ -35,15 +35,16 @@ public class ItemFrameEntityMixin {
 
             if (!heldItem.isEmpty()) {
                 ItemStack itemInFrame = itemFrame.getHeldItemStack();
-                NbtCompound nbt = MangeLogs.toolTip.mangelogs$encodeStack(itemInFrame, itemFrame.getRegistryManager().getOps(NbtOps.INSTANCE));
-                String nbtString = nbt != null ? nbt.toString() : "No NBT";
+//                NbtCompound nbt = MangeLogs.toolTip.mangelogs$encodeStack(itemInFrame, itemFrame.getRegistryManager().getOps(NbtOps.INSTANCE));
+//                String nbtString = nbt != null ? nbt.toString() : "No NBT";
 
                 String eventInfo = String.format(
-                        "Player: %s | Location: %s | Item: %s | NBT: %s",
+                        "Player: %s | Location: %s | Item: %s",
                         player.getName().getString(),
                         Utils.formatPlayerLocation(player),
-                        itemInFrame.getItem().getName().getString(),
-                        nbtString
+                        itemInFrame.getItem().getName().getString()
+//                        ,
+//                        nbtString
                 );
                 LogWriter.logToFile("ItemPlacedInFrame", eventInfo);
             }
@@ -55,14 +56,15 @@ public class ItemFrameEntityMixin {
             ItemFrameEntity itemFrame = (ItemFrameEntity) (Object) this;
 
             ItemStack itemInFrame = itemFrame.getHeldItemStack();
-            NbtCompound nbt = MangeLogs.toolTip.mangelogs$encodeStack(itemInFrame, itemFrame.getRegistryManager().getOps(NbtOps.INSTANCE));
-            String nbtString = nbt != null ? nbt.toString() : "No NBT";
+//            NbtCompound nbt = MangeLogs.toolTip.mangelogs$encodeStack(itemInFrame, itemFrame.getRegistryManager().getOps(NbtOps.INSTANCE));
+//            String nbtString = nbt != null ? nbt.toString() : "No NBT";
 
             String eventInfo = String.format(
-                    "Location: %s | Item: %s | NBT: %s",
+                    "Location: %s | Item: %s",
                     Utils.formatEntityLocation(itemFrame),
-                    itemInFrame.getItem().getName().getString(),
-                    nbtString
+                    itemInFrame.getItem().getName().getString()
+//                    ,
+//                    nbtString
             );
             LogWriter.logToFile("ItemFrameItemRemoved", eventInfo);
         }

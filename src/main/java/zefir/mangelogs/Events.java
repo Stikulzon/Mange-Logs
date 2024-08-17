@@ -40,10 +40,10 @@ public class Events {
         if (ConfigManager.isLogEventEnabled("AttackEntity")) {
             AttackEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
                 String entityInfo = entity instanceof PlayerEntity
-                        ? "player " + entity.getName().getString()
+                        ? "player " + entity.getName().getString() + " with UUID " + entity.getUuid().toString()
                         : entity.hasCustomName()
-                        ? "entity " + Utils.EntityType(entity) + " with name " + entity.getName().getString()
-                        : "entity " + entity.getName().getString();
+                        ? "entity " + Utils.EntityType(entity) + " with name " + entity.getName().getString() + " with UUID " + entity.getUuid().toString()
+                        : "entity " + entity.getName().getString() + " with UUID " + entity.getUuid().toString();
 
                 String eventInfo = String.format(
                         "Player: %s | Location: %s | Action: Attacked %s at %s",
@@ -123,10 +123,10 @@ public class Events {
             UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
                 if (hitResult != null) {
                     String entityInfo = entity instanceof PlayerEntity
-                            ? "player " + entity.getName().getString()
+                            ? "player " + entity.getName().getString() + " with UUID " + entity.getUuid().toString()
                             : entity.hasCustomName()
-                            ? "entity " + Utils.EntityType(entity) + " with name " + entity.getName().getString()
-                            : "entity " + entity.getName().getString();
+                            ? "entity " + Utils.EntityType(entity) + " with name " + entity.getName().getString() + " with UUID " + entity.getUuid().toString()
+                            : "entity " + entity.getName().getString() + " with UUID " + entity.getUuid().toString();
 
                     String eventInfo = String.format(
                             "Player: %s | Location: %s | Action: Right-clicked %s at %s",

@@ -11,11 +11,10 @@ import zefir.mangelogs.utils.NBTTooltipAccessor;;
 
 public class MangeLogs implements ModInitializer {
     public static final Logger LOGGER = LoggerFactory.getLogger("mange-logs");
-	public static NBTTooltipAccessor toolTip;
+	public static NBTTooltipAccessor toolTip = (NBTTooltipAccessor) new NBTTooltip();
 	@Override
 	public void onInitialize() {
 		LOGGER.info("Initialization of the MangeLogs");
-		toolTip = (NBTTooltipAccessor) new NBTTooltip();
 		ConfigManager.registerConfigs();
 
 		Events.RegisterEvents();

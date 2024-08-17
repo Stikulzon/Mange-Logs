@@ -28,15 +28,17 @@ public class LivingEntityMixin {
                 ItemStack pickedStack = item.getStack();
 
                 // Use encodeStack from NBTTooltip to get the NBT data as a compound
-                NbtCompound nbt = MangeLogs.toolTip.mangelogs$encodeStack(pickedStack, player.getRegistryManager().getOps(NbtOps.INSTANCE));
-                String nbtString = !nbt.isEmpty() ? nbt.toString() : "No NBT";
+//                NbtCompound nbt = MangeLogs.toolTip.mangelogs$encodeStack(pickedStack, player.getRegistryManager().getOps(NbtOps.INSTANCE));
+//                String nbtString = !nbt.isEmpty() ? nbt.toString() : "No NBT";
 
                 String eventInfo = String.format(
-                        "Player: %s | Location: %s | Item: %s | NBT: %s",
+                        "Player: %s | PlayerUuid: %s | Location: %s | Item: %s",
                         player.getName().getString(),
+                        player.getUuid().toString(),
                         Utils.formatPlayerLocation(player),
-                        pickedStack.getItem().getName().getString(),
-                        nbtString
+                        pickedStack.getItem().getName().getString()
+//                        ,
+//                        nbtString
                 );
                 LogWriter.logToFile("ItemPickup", eventInfo);
             }
