@@ -47,8 +47,7 @@ public class LogWriter {
             Files.write(logFilePath, logEntry.getBytes(), java.nio.file.StandardOpenOption.APPEND);
 
         } catch (IOException e) {
-            System.err.println("Error writing to log file:");
-            e.printStackTrace();
+            MangeLogs.LOGGER.error("Error writing to log file: ", e);
         }
     }
 

@@ -56,15 +56,15 @@ public class ItemFrameEntityMixin {
             ItemFrameEntity itemFrame = (ItemFrameEntity) (Object) this;
 
             ItemStack itemInFrame = itemFrame.getHeldItemStack();
-//            NbtCompound nbt = MangeLogs.toolTip.mangelogs$getItemStackNbt(itemInFrame, itemFrame.getRegistryManager().getOps(NbtOps.INSTANCE));
-//            String nbtString = nbt != null ? nbt.toString() : "No NBT";
+            NbtCompound nbt = getItemStackNbt(itemInFrame, itemFrame.getRegistryManager().getOps(NbtOps.INSTANCE));
+            String nbtString = nbt != null ? nbt.toString() : "No NBT";
 
             String eventInfo = String.format(
-                    "Location: %s | Item: %s",
+                    "Location: %s | Item: %s | Nbt: %s",
                     Utils.formatEntityLocation(itemFrame),
                     itemInFrame.getItem().getName().getString()
-//                    ,
-//                    nbtString
+                    ,
+                    nbtString
             );
             LogWriter.logToFile("ItemFrameItemRemoved", eventInfo);
         }
