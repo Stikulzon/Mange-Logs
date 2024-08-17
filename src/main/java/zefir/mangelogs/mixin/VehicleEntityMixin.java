@@ -18,8 +18,9 @@ public class VehicleEntityMixin {
             VehicleEntity minecart = (VehicleEntity) (Object) this;
             World world = minecart.getWorld();
             String eventInfo = String.format(
-                    "Minecart Type: %s | Location: World: %s Dimension: %s X: %d Y: %d Z: %d | Damage Source: %s",
+                    "Minecart Type: %s | Minecart Uuid: %s | Location: World: %s Dimension: %s X: %d Y: %d Z: %d | Damage Source: %s",
                     minecart.getType().getName().getString(),
+                    minecart.getUuid().toString(),
                     world.getRegistryKey().getValue(),
                     world.getDimension(),
                     minecart.getBlockPos().getX(),

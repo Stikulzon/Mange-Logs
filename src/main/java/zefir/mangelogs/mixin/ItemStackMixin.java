@@ -6,19 +6,18 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.random.Random;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import zefir.mangelogs.LogWriter;
-import zefir.mangelogs.MangeLogs;
 import zefir.mangelogs.config.ConfigManager;
 import zefir.mangelogs.utils.Utils;
 
 import java.util.function.Consumer;
+
+import static zefir.mangelogs.MangeLogs.getItemStackNbt;
 
 @Mixin(ItemStack.class)
 public class ItemStackMixin {
@@ -27,16 +26,16 @@ public class ItemStackMixin {
         if (ConfigManager.isLogEventEnabled("ItemBreak")) {
             ItemStack is = (ItemStack) (Object) this;
             if (player != null && is.getDamage() + amount >= is.getMaxDamage()) {
-//                NbtCompound nbt = MangeLogs.toolTip.mangelogs$encodeStack(is, player.getRegistryManager().getOps(NbtOps.INSTANCE));
-//                String nbtString = nbt != null ? nbt.toString() : "No NBT";
+                NbtCompound nbt = getItemStackNbt(is, player.getRegistryManager().getOps(NbtOps.INSTANCE));
+                String nbtString = nbt != null ? nbt.toString() : "No NBT";
 
                 String eventInfo = String.format(
-                        "Player: %s | Location: %s | Item: %s",
+                        "Player: %s | Location: %s | Item: %s | Nbt: %s",
                         player.getName().getString(),
                         Utils.formatPlayerLocation(player),
                         is.getItem().getName().getString()
-//                        ,
-//                        nbtString
+                        ,
+                        nbtString
                 );
                 LogWriter.logToFile("ItemBreak", eventInfo);
             }

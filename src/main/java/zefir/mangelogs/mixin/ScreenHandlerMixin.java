@@ -12,9 +12,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import zefir.mangelogs.LogWriter;
-import zefir.mangelogs.MangeLogs;
 import zefir.mangelogs.config.ConfigManager;
 import zefir.mangelogs.utils.Utils;
+
+import static zefir.mangelogs.MangeLogs.getItemStackNbt;
 
 @Mixin(ScreenHandler.class)
 public class ScreenHandlerMixin {
@@ -26,19 +27,19 @@ public class ScreenHandlerMixin {
                 Slot slot = ((ScreenHandler) (Object) this).getSlot(slotIndex);
                 ItemStack clickedStack = slot.getStack();
 
-//                NbtCompound nbt = MangeLogs.toolTip.mangelogs$encodeStack(clickedStack, player.getRegistryManager().getOps(NbtOps.INSTANCE));
-//                String nbtString = nbt != null ? nbt.toString() : "No NBT";
+                NbtCompound nbt = getItemStackNbt(clickedStack, player.getRegistryManager().getOps(NbtOps.INSTANCE));
+                String nbtString = nbt != null ? nbt.toString() : "No NBT";
 
                 String eventInfo = String.format(
-                        "Player: %s | Location: %s | Slot: %d | Button: %d | Action: %s | Item: %s",
+                        "Player: %s | Location: %s | Slot: %d | Button: %d | Action: %s | Item: %s | Nbt: %s",
                         player.getName().getString(),
                         Utils.formatPlayerLocation(player),
                         slotIndex,
                         button,
                         actionType,
                         clickedStack.getItem().getName().getString()
-//                        ,
-//                        nbtString
+                        ,
+                        nbtString
                 );
                 LogWriter.logToFile("UIClick", eventInfo);
             }

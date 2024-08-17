@@ -12,7 +12,6 @@
     "ItemStackMixin",
     "LivingEntityMixin",
     "MobEntityMixin",
-    "NBTTooltipMixin",
     "PlayerEntityMixin",
     "ScreenHandlerMixin"
   ],

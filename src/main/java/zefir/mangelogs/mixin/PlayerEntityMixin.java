@@ -10,9 +10,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import zefir.mangelogs.LogWriter;
-import zefir.mangelogs.MangeLogs;
 import zefir.mangelogs.config.ConfigManager;
 import zefir.mangelogs.utils.Utils;
+
+import static zefir.mangelogs.MangeLogs.getItemStackNbt;
 
 @Mixin(PlayerEntity.class)
 public class PlayerEntityMixin {
@@ -22,16 +23,16 @@ public class PlayerEntityMixin {
             if (cir.getReturnValue() != null) {
                 PlayerEntity player = (PlayerEntity) (Object) this;
 
-//                NbtCompound nbt = MangeLogs.toolTip.mangelogs$encodeStack(stack, player.getRegistryManager().getOps(NbtOps.INSTANCE));
-//                String nbtString = nbt != null ? nbt.toString() : "No NBT";
+                NbtCompound nbt = getItemStackNbt(stack, player.getRegistryManager().getOps(NbtOps.INSTANCE));
+                String nbtString = nbt != null ? nbt.toString() : "No NBT";
 
                 String eventInfo = String.format(
-                        "Player: %s | Location: %s | Item: %s",
+                        "Player: %s | Location: %s | Item: %s | Nbt: %s",
                         player.getName().getString(),
                         Utils.formatPlayerLocation(player),
                         stack.getItem().getName().getString()
-//                        ,
-//                        nbtString
+                        ,
+                        nbtString
                 );
                 LogWriter.logToFile("ItemDropped", eventInfo);
             }
