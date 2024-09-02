@@ -1,92 +1,119 @@
 package zefir.mangelogs;
 
-import java.io.*;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-import java.util.zip.ZipOutputStream;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
+import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.core.appender.RollingFileAppender;
+import org.apache.logging.log4j.core.appender.rolling.*;
+import org.apache.logging.log4j.core.config.AppenderRef;
+import org.apache.logging.log4j.core.config.Configuration;
+import org.apache.logging.log4j.core.config.LoggerConfig;
+import org.apache.logging.log4j.core.layout.PatternLayout;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 public class LogWriter {
     private static final String LOG_FOLDER = "MangeLogs";
     private static final String ARCHIVE_FOLDER = "MangeLogs/Archive";
-    private static final Path LOG_FOLDER_PATH = Paths.get(LOG_FOLDER);
-    private static final Path ARCHIVE_FOLDER_PATH = Paths.get(ARCHIVE_FOLDER);
+    private static final String FILE_NAME_PATTERN = "%d{yyyy-MM-dd}-%i.log";
+    private static final String ARCHIVE_FILE_NAME_PATTERN = ARCHIVE_FOLDER + "/%d{yyyy-MM-dd}-%i.zip";
+    private static final String LOG_PATTERN = "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n";
 
-    public static void logToFile(String eventName, String eventInfo) {
+    private static Logger configureLogger(String eventName) {
+        LoggerContext context = (LoggerContext) LogManager.getContext(false);
+        Configuration config = context.getConfiguration();
+
+        // Check and archive old log files
+        archiveOldLogFiles();
+
+        PatternLayout layout = PatternLayout.newBuilder()
+                .withPattern(LOG_PATTERN)
+                .withCharset(StandardCharsets.UTF_8)
+                .build();
+
+        String fileName = LOG_FOLDER + "/" + LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE) + "_" + eventName + ".log";
+
+        RollingFileAppender appender = RollingFileAppender.newBuilder()
+                .setName(eventName + "FileAppender")
+                .withFileName(fileName)
+                .withFilePattern(ARCHIVE_FILE_NAME_PATTERN)
+                .setLayout(layout)
+                .withPolicy(CompositeTriggeringPolicy.createPolicy(
+                        TimeBasedTriggeringPolicy.newBuilder().withInterval(1).withModulate(true).build(),
+                        SizeBasedTriggeringPolicy.createPolicy("10MB")
+                ))
+                .withStrategy(DefaultRolloverStrategy.newBuilder()
+                        .withMax("30")
+                        .withFileIndex("nomax")
+                        .withCompressionLevelStr("9")
+                        .build())
+                .build();
+
+        appender.start();
+        config.addAppender(appender);
+
+        AppenderRef ref = AppenderRef.createAppenderRef(eventName + "FileAppender", null, null);
+        AppenderRef[] refs = new AppenderRef[] {ref};
+
+        LoggerConfig loggerConfig = LoggerConfig.createLogger(false, Level.INFO, eventName,
+                "true", refs, null, config, null);
+        loggerConfig.addAppender(appender, null, null);
+
+        config.addLogger(eventName, loggerConfig);
+        context.updateLoggers();
+
+        return context.getLogger(eventName);
+    }
+
+    private static void archiveOldLogFiles() {
+        Path logFolderPath = Paths.get(LOG_FOLDER);
+        Path archiveFolderPath = Paths.get(ARCHIVE_FOLDER);
+        LocalDate today = LocalDate.now();
+
         try {
-            String currentDateString = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-            String logFileName = currentDateString + "_" + eventName + ".txt";
-            Path logFilePath = LOG_FOLDER_PATH.resolve(logFileName);
+            Files.createDirectories(logFolderPath);
+            Files.createDirectories(archiveFolderPath);
 
-            Files.createDirectories(LOG_FOLDER_PATH);
-            Files.createDirectories(ARCHIVE_FOLDER_PATH);
-
-            try (DirectoryStream<Path> stream = Files.newDirectoryStream(LOG_FOLDER_PATH)) {
+            try (DirectoryStream<Path> stream = Files.newDirectoryStream(logFolderPath, "*.log")) {
                 for (Path file : stream) {
-                    if (Files.isRegularFile(file) && !file.getFileName().toString().equals(logFileName)) {
-                        String fileDate = file.getFileName().toString().substring(0, 10);
-                        if (!fileDate.equals(currentDateString)) {
-                            archiveLog(file, fileDate);
-                        }
+                    String fileName = file.getFileName().toString();
+                    LocalDate fileDate = LocalDate.parse(fileName.substring(0, 10), DateTimeFormatter.ISO_LOCAL_DATE);
+
+                    if (fileDate.isBefore(today)) {
+                        archiveLogFile(file, fileDate);
                     }
                 }
             }
-
-            if (Files.notExists(logFilePath)) {
-                Files.createFile(logFilePath);
-            }
-
-            String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z").format(new Date());
-            String logEntry = "|Time: " + timestamp + "|" + eventInfo + "|\n";
-            Files.write(logFilePath, logEntry.getBytes(), java.nio.file.StandardOpenOption.APPEND);
-
         } catch (IOException e) {
-            MangeLogs.LOGGER.error("Error writing to log file: ", e);
+            LogManager.getRootLogger().error("Error archiving old log files", e);
         }
     }
 
-    private static void archiveLog(Path logFile, String fileDate) throws IOException {
-        String archiveFileName = fileDate + ".zip";
-        Path archiveFilePath = ARCHIVE_FOLDER_PATH.resolve(archiveFileName);
+    private static void archiveLogFile(Path logFile, LocalDate fileDate) throws IOException {
+        String archiveFileName = fileDate.format(DateTimeFormatter.ISO_LOCAL_DATE) + ".zip";
+        Path archiveFilePath = Paths.get(ARCHIVE_FOLDER, archiveFileName);
 
-        Path tempZipFile = Files.createTempFile("temp_archive", ".zip");
-
-        try (ZipOutputStream zipOut = new ZipOutputStream(Files.newOutputStream(tempZipFile))) {
-            if (Files.exists(archiveFilePath)) {
-                try (ZipInputStream zipIn = new ZipInputStream(Files.newInputStream(archiveFilePath))) {
-                    ZipEntry entry;
-                    while ((entry = zipIn.getNextEntry()) != null) {
-                        zipOut.putNextEntry(new ZipEntry(entry.getName()));
-                        copyInputStreamToOutputStream(zipIn, zipOut);
-                        zipOut.closeEntry();
-                    }
-                }
-            }
-
-            ZipEntry entry = new ZipEntry(logFile.getFileName().toString());
-            zipOut.putNextEntry(entry);
-            try (InputStream inputStream = Files.newInputStream(logFile)) {
-                copyInputStreamToOutputStream(inputStream, zipOut);
-            }
+        try (ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(archiveFilePath.toFile()))) {
+            zipOut.putNextEntry(new ZipEntry(logFile.getFileName().toString()));
+            Files.copy(logFile, zipOut);
             zipOut.closeEntry();
         }
 
-        Files.deleteIfExists(archiveFilePath);
-        Files.move(tempZipFile, archiveFilePath);
         Files.delete(logFile);
     }
 
-    private static void copyInputStreamToOutputStream(InputStream in, OutputStream out) throws IOException {
-        byte[] buffer = new byte[4096];
-        int len;
-        while ((len = in.read(buffer)) > 0) {
-            out.write(buffer, 0, len);
-        }
+    public static void logToFile(String eventName, String eventInfo) {
+        Logger logger = configureLogger(eventName);
+        logger.info(eventInfo);
     }
 }
